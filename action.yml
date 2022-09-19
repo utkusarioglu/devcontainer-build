@@ -90,7 +90,7 @@ runs:
       uses: docker/login-action@v1
       with:
         username: ${{ inputs.docker_hub_username }}
-        password: ${{ secrets.docker_hub_token }}
+        password: ${{ inputs.docker_hub_token }}
 
     - name: Build and push ${{ steps.variables.outputs.image_ref }}
       uses: docker/build-push-action@v2
@@ -114,7 +114,7 @@ runs:
       with:
         imageName: ${{ steps.variables.outputs.repo_name }}
         imageTag: ${{ steps.variables.outputs.image_tag }}
-        subFolder: ${{ input.devcontainer_subfolder }}
+        subFolder: ${{ inputs.devcontainer_subfolder }}
         runCmd: ${{ inputs.devcontainer_run_cmd }}
 
     - name: Push devcontainer ${{ steps.variables.outputs.dev_image_ref }}
