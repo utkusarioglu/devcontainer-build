@@ -29,7 +29,7 @@ inputs:
     description: |
       The path where the action will look for the `.devcontainer` folder.
     required: false
-  devcontainer_run_cmd:
+  devcontainer_run_cmd_path:
     description: |
       Path to a script file to run inside the devcontainer once the build is 
       complete. You can run some checks using this feature
@@ -115,7 +115,7 @@ runs:
         imageName: ${{ steps.variables.outputs.repo_name }}
         imageTag: ${{ steps.variables.outputs.image_tag }}
         subFolder: ${{ inputs.devcontainer_subfolder }}
-        runCmd: ${{ inputs.devcontainer_run_cmd }}
+        runCmd: ${{ inputs.devcontainer_run_cmd_path }}
 
     - name: Push devcontainer ${{ steps.variables.outputs.dev_image_ref }}
       shell: bash
