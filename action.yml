@@ -127,7 +127,7 @@ runs:
         username: ${{ inputs.docker_hub_username }}
         password: ${{ inputs.docker_hub_password }}
         repository: ${{ steps.variables.outputs.repo_name }}
-        short_description: ${{ inputs.docker_hub_repo_short_description }}
+        short-description: ${{ inputs.docker_hub_repo_short_description }}
         readme-filepath: ${{ inputs.docker_hub_repo_readme_file_path }}
 
     - name: Move cache
