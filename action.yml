@@ -74,13 +74,13 @@ runs:
         dev_repo_ref="$repo_name:$dev_image_tag"
         dev_image_ref="${{ inputs.image_name }}:$dev_image_tag"
 
-        echo "::set-output name=repo_name::$repo_name"
-        echo "::set-output name=image_tag::$image_tag"
-        echo "::set-output name=dev_image_tag::$dev_image_tag"
-        echo "::set-output name=repo_ref::$repo_ref"
-        echo "::set-output name=image_ref::$image_ref"
-        echo "::set-output name=dev_repo_ref::$dev_repo_ref"
-        echo "::set-output name=dev_image_ref::$dev_image_ref"
+        echo "repo_name=$repo_name" >> $GITHUB_OUTPUT
+        echo "image_tag=$image_tag" >> $GITHUB_OUTPUT
+        echo "dev_image_tag=$dev_image_tag" >> $GITHUB_OUTPUT
+        echo "repo_ref=$repo_ref" >> $GITHUB_OUTPUT
+        echo "image_ref=$image_ref" >> $GITHUB_OUTPUT
+        echo "dev_repo_ref=$dev_repo_ref" >> $GITHUB_OUTPUT
+        echo "dev_image_ref=$dev_image_ref" >> $GITHUB_OUTPUT
 
     - name: Set up Docker Buildx
       id: buildx
