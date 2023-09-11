@@ -107,7 +107,7 @@ runs:
 
     - name: Build devcontainer ${{ steps.variables.outputs.dev_image_ref }}
       id: devcontainer_build
-      uses: devcontainers/ci@v0.2
+      uses: devcontainers/ci@v0.3
       env:
         IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
         IMAGE_TAG: ${{ steps.variables.outputs.image_tag }}
