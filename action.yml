@@ -99,7 +99,7 @@ runs:
         context: .
         tags: ${{ steps.variables.outputs.repo_ref }}
         file: ${{ inputs.dockerfile_path }}
-        push: false
+        push: true
         pull: false
         cache-from: type=local,src=${{ inputs.cache_src }}
         cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
