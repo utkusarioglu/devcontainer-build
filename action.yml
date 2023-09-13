@@ -130,6 +130,9 @@ runs:
         IMAGE_NAME: ${{ inputs.image_name }}
         IMAGE_TAG: ${{ steps.variables.outputs.image_tag }}
       run: |
+        echo "Images in docker before devcontainer build starts:"
+        docker image ls
+        echo "starting devcontainer build..."
         devcontainer build \
           --workspace-folder "${{ inputs.devcontainer_subfolder }}"  \
           --image-name "${{ steps.variables.outputs.repo_ref }}" \
