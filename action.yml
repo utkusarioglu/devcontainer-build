@@ -99,7 +99,7 @@ runs:
         context: .
         tags: ${{ steps.variables.outputs.repo_ref }}
         file: ${{ inputs.dockerfile_path }}
-        push: true
+        push: false
         pull: false
         cache-from: type=local,src=${{ inputs.cache_src }}
         cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
@@ -117,9 +117,17 @@ runs:
     #     subFolder: ${{ inputs.devcontainer_subfolder }}
     #     runCmd: ${{ inputs.devcontainer_run_cmd_path }}
   
+    - name: Install devcontainer cli
+      shell: bash
+      run: |
+        npm install -g @devcontainers/cli
+        
     - name: Build devcontainer (new)
       id: devcontainer_build
       shell: bash
+      env:
+        IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
+        IMAGE_TAG: ${{ steps.variables.outputs.image_tag }}
       run: |
         devcontainer build \
           --workspace-folder: ${{ inputs.devcontainer_subfolder }}  \
