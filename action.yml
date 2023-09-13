@@ -106,8 +106,6 @@ runs:
         file: ${{ inputs.dockerfile_path }}
         push: false
         pull: false
-        # cache-from: /dev/mapper/buildvg-buildlv
-        # cache-to: /dev/mapper/buildvg-buildlv
         cache-from: type=local,src=${{ inputs.cache_src }}
         cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
         build-args: ${{ inputs.build_args }}
@@ -124,7 +122,7 @@ runs:
     #     subFolder: ${{ inputs.devcontainer_subfolder }}
     #     runCmd: ${{ inputs.devcontainer_run_cmd_path }}
         
-    - name: Build devcontainer (new)
+    - name: Build devcontainer - new
       id: devcontainer_build
       shell: bash
       env:
