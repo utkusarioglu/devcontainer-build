@@ -105,17 +105,24 @@ runs:
         cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
         build-args: ${{ inputs.build_args }}
 
-    - name: Build devcontainer ${{ steps.variables.outputs.dev_image_ref }}
+    # - name: Build devcontainer ${{ steps.variables.outputs.dev_image_ref }}
+    #   id: devcontainer_build
+    #   uses: devcontainers/ci@v0.3.1900000329
+    #   env:
+    #     IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
+    #     IMAGE_TAG: ${{ steps.variables.outputs.image_tag }}
+    #   with:
+    #     imageName: ${{ steps.variables.outputs.repo_name }}
+    #     imageTag: ${{ steps.variables.outputs.image_tag }}
+    #     subFolder: ${{ inputs.devcontainer_subfolder }}
+    #     runCmd: ${{ inputs.devcontainer_run_cmd_path }}
+  
+    - name: Build devcontainer (new)
       id: devcontainer_build
-      uses: devcontainers/ci@v0.3.1900000329
-      env:
-        IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
-        IMAGE_TAG: ${{ steps.variables.outputs.image_tag }}
-      with:
-        imageName: ${{ steps.variables.outputs.repo_name }}
-        imageTag: ${{ steps.variables.outputs.image_tag }}
-        subFolder: ${{ inputs.devcontainer_subfolder }}
-        runCmd: ${{ inputs.devcontainer_run_cmd_path }}
+      run: |
+        devcontainer build \
+          --workspace-folder: ${{ inputs.devcontainer_subfolder }}  \
+          --image_name: ${{ steps.variables.outputs.repo_ref }}
 
     - name: Push devcontainer ${{ steps.variables.outputs.dev_image_ref }}
       shell: bash
