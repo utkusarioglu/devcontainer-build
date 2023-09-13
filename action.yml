@@ -127,7 +127,7 @@ runs:
       shell: bash
       run: |
         echo "Loading image…"
-        docker load --image /tmp/temp-image.tar
+        docker load --input /tmp/temp-image.tar
         echo "Images in docker before devcontainer build starts:"
         docker image ls -a
         
