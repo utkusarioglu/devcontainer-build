@@ -131,7 +131,7 @@ runs:
       run: |
         devcontainer build \
           --workspace-folder "${{ inputs.devcontainer_subfolder }}"  \
-          --image_name "${{ steps.variables.outputs.repo_ref }}"
+          --image-name "${{ steps.variables.outputs.repo_ref }}"
 
     - name: Push devcontainer ${{ steps.variables.outputs.dev_image_ref }}
       shell: bash
