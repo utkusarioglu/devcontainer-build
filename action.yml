@@ -117,8 +117,8 @@ runs:
         file: ${{ inputs.dockerfile_path }}
         push: true
         pull: false
-        # cache-from: type=local,src=${{ inputs.cache_src }}
-        # cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
+        cache-from: type=local,src=${{ inputs.cache_src }}
+        cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
         # outputs: type=docker,dest=/tmp/temp-image.tar
         build-args: ${{ inputs.build_args }}
 
