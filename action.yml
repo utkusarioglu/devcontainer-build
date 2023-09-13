@@ -102,19 +102,24 @@ runs:
         username: ${{ inputs.docker_hub_username }}
         password: ${{ inputs.docker_hub_token }}
 
+    - name: Start local registry
+      shell: bash
+      run: |
+        docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
     - name: Build and push ${{ steps.variables.outputs.image_ref }}
       uses: docker/build-push-action@v5
       id: docker-build
       with:
         context: .
         # tags: ${{ steps.variables.outputs.repo_ref }}
-        tags: ${{ steps.variables.outputs.image_ref }}
+        tags: localhost:5000/${{ steps.variables.outputs.image_ref }}
         file: ${{ inputs.dockerfile_path }}
-        push: false
-        pull: true
+        push: true
+        pull: false
         # cache-from: type=local,src=${{ inputs.cache_src }}
         # cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
-        outputs: type=docker,dest=/tmp/temp-image.tar
+        # outputs: type=docker,dest=/tmp/temp-image.tar
         build-args: ${{ inputs.build_args }}
 
     # - name: Build devcontainer ${{ steps.variables.outputs.dev_image_ref }}
@@ -128,20 +133,21 @@ runs:
     #     imageTag: ${{ steps.variables.outputs.image_tag }}
     #     subFolder: ${{ inputs.devcontainer_subfolder }}
     #     runCmd: ${{ inputs.devcontainer_run_cmd_path }}
-    - name: Docker load
-      shell: bash
-      run: |
-        echo "Loading image…"
-        docker load --input /tmp/temp-image.tar
-        echo "Images in docker before devcontainer build starts:"
-        docker image ls -a
+
+    # - name: Docker load
+    #   shell: bash
+    #   run: |
+    #     echo "Loading image…"
+    #     docker load --input /tmp/temp-image.tar
+    #     echo "Images in docker before devcontainer build starts:"
+    #     docker image ls -a
         
     - name: Build devcontainer - new
       id: devcontainer_build
       shell: bash
       env:
         # IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
-        IMAGE_NAME: ${{ inputs.image_name }}
+        IMAGE_NAME: localhost:5000/${{ inputs.image_name }}
         IMAGE_TAG: ${{ steps.variables.outputs.image_tag }}
       run: |
         echo "starting devcontainer build..."
