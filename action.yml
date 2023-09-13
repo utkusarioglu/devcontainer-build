@@ -105,10 +105,10 @@ runs:
         # tags: ${{ steps.variables.outputs.repo_ref }}
         tags: ${{ steps.variables.outputs.image_ref }}
         file: ${{ inputs.dockerfile_path }}
-        push: true
+        push: false
         pull: false
-        cache-from: type=local,src=${{ inputs.cache_src }}
-        cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
+        # cache-from: type=local,src=${{ inputs.cache_src }}
+        # cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
         build-args: ${{ inputs.build_args }}
 
     # - name: Build devcontainer ${{ steps.variables.outputs.dev_image_ref }}
