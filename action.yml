@@ -126,7 +126,8 @@ runs:
       id: devcontainer_build
       shell: bash
       env:
-        IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
+        # IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
+        IMAGE_NAME: ${{ inputs.image_name }}
         IMAGE_TAG: ${{ steps.variables.outputs.image_tag }}
       run: |
         devcontainer build \
