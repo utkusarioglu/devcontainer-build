@@ -119,6 +119,7 @@ runs:
   
     - name: Build devcontainer (new)
       id: devcontainer_build
+      shell: bash
       run: |
         devcontainer build \
           --workspace-folder: ${{ inputs.devcontainer_subfolder }}  \
