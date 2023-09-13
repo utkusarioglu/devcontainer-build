@@ -112,8 +112,8 @@ runs:
       id: docker-build
       with:
         context: .
-        # tags: ${{ steps.variables.outputs.repo_ref }}
-        tags: localhost:5000/${{ steps.variables.outputs.image_ref }}
+        tags: ${{ steps.variables.outputs.repo_ref }}
+        # tags: localhost:5000/${{ steps.variables.outputs.image_ref }}
         file: ${{ inputs.dockerfile_path }}
         push: true
         pull: false
@@ -146,8 +146,8 @@ runs:
       id: devcontainer_build
       shell: bash
       env:
-        # IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
-        IMAGE_NAME: localhost:5000/${{ inputs.image_name }}
+        IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
+        # IMAGE_NAME: localhost:5000/${{ inputs.image_name }}
         IMAGE_TAG: ${{ steps.variables.outputs.image_tag }}
       run: |
         echo "starting devcontainer build..."
