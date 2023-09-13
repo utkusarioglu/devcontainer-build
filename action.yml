@@ -109,7 +109,7 @@ runs:
         pull: false
         cache-from: type=local,src=${{ inputs.cache_src }}
         cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
-        output: type=docker
+        output: type=image
         build-args: ${{ inputs.build_args }}
 
     # - name: Build devcontainer ${{ steps.variables.outputs.dev_image_ref }}
