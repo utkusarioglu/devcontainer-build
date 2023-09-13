@@ -129,8 +129,7 @@ runs:
         IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
         IMAGE_TAG: ${{ steps.variables.outputs.image_tag }}
       run: |
-        devcontainer build \
-          --workspace-folder: ${{ inputs.devcontainer_subfolder }}  \
+        devcontainer build ${{ inputs.devcontainer_subfolder }}  \
           --image_name: ${{ steps.variables.outputs.repo_ref }}
 
     - name: Push devcontainer ${{ steps.variables.outputs.dev_image_ref }}
