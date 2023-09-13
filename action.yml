@@ -101,8 +101,10 @@ runs:
         file: ${{ inputs.dockerfile_path }}
         push: false
         pull: false
-        cache-from: type=local,src=${{ inputs.cache_src }}
-        cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
+        cache-from: /dev/mapper/buildvg-buildlv
+        cache-to: /dev/mapper/buildvg-buildlv
+        # cache-from: type=local,src=${{ inputs.cache_src }}
+        # cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
         build-args: ${{ inputs.build_args }}
 
     # - name: Build devcontainer ${{ steps.variables.outputs.dev_image_ref }}
@@ -131,7 +133,8 @@ runs:
       run: |
         devcontainer build \
           --workspace-folder "${{ inputs.devcontainer_subfolder }}"  \
-          --image-name "${{ steps.variables.outputs.repo_ref }}"
+          --image-name "${{ steps.variables.outputs.repo_ref }}" \
+          --no-cache true
 
     - name: Push devcontainer ${{ steps.variables.outputs.dev_image_ref }}
       shell: bash
