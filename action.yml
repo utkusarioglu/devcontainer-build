@@ -53,14 +53,11 @@ inputs:
     required: false
     default: /tmp/.buildx-cache-new
     
-defaults:
-  run:
-    shell: bash
-
 runs:
   using: composite
   steps:
     - name: Variables
+      shell: bash
       id: variables
       run: |
         # Repo names include the username. Example: apache/kafka
@@ -89,10 +86,12 @@ runs:
         echo "dev_image_ref=$dev_image_ref" >> $GITHUB_OUTPUT
 
     - name: Install devcontainer cli
+      shell: bash
       run: |
         npm install -g @devcontainers/cli
     
     - name: Prune images
+      shell: bash
       run: |
         docker image prune -af
 
@@ -107,6 +106,7 @@ runs:
         password: ${{ inputs.dockerhub_token }}
 
     - name: Start local registry
+      shell: bash
       run: |
         docker run -d -p 5000:5000 --restart=always --name registry registry:2
 
@@ -147,6 +147,7 @@ runs:
         
     - name: Build devcontainer - new
       id: devcontainer_build
+      shell: bash
       env:
         IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
         # IMAGE_NAME: localhost:5000/${{ inputs.image_name }}
@@ -159,6 +160,7 @@ runs:
           --no-cache true
 
     - name: Push devcontainer ${{ steps.variables.outputs.dev_image_ref }}
+      shell: bash
       run: docker push ${{ steps.variables.outputs.repo_ref }}
 
     - name: Set Docker Hub description
@@ -171,6 +173,7 @@ runs:
         readme-filepath: ${{ inputs.dockerhub_repo_readme_file_path }}
 
     - name: Move cache
+      shell: bash
       run: |
         rm -rf ${{ inputs.cache_src }}
         if [ -d ${{ inputs.cache_src }} ];
