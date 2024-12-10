@@ -9,6 +9,12 @@ inputs:
   docker_context:
     description: Docker build context
     required: true
+  dockerhub_username:
+    description: Username for Docker Hub
+    required: true
+  dockerhub_token:
+    description: Docker Hub authentication token
+    required: true
   image_name:
     description: "Name for the container to be created. Example: nginx"
     required: true
@@ -46,13 +52,6 @@ inputs:
     description: Path for the docker cache destination
     required: false
     default: /tmp/.buildx-cache-new
-secrets:
-  dockerhub_username:
-    description: Username for Docker Hub
-    required: true
-  dockerhub_token:
-    description: Docker Hub authentication token
-    required: true
 
 runs:
   using: composite
