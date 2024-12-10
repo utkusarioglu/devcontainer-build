@@ -6,6 +6,9 @@ branding:
   color: "green"
 
 inputs:
+  docker_context:
+    description: Docker build context
+    required: true
   docker_hub_username:
     description: Username for Docker Hub
     required: true
@@ -111,7 +114,7 @@ runs:
       uses: docker/build-push-action@v5
       id: docker-build
       with:
-        context: .
+        context: ${{ intputs.docker_context }}
         tags: ${{ steps.variables.outputs.repo_ref }}
         # tags: localhost:5000/${{ steps.variables.outputs.image_ref }}
         file: ${{ inputs.dockerfile_path }}
