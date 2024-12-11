@@ -151,11 +151,11 @@ runs:
       shell: bash
       run: docker image ls -a
           
-    - name: Retag image
-      shell: bash
-      run: docker image tag \
-          ${{ steps.variables.outputs.latest_ref }} \
-          ${{ steps.variables.outputs.repo_ref }} 
+    # - name: Retag image
+    #   shell: bash
+    #   run: docker image tag \
+    #       ${{ steps.variables.outputs.latest_ref }} \
+    #       ${{ steps.variables.outputs.repo_ref }} 
     
     - name: List images
       shell: bash
