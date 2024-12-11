@@ -89,6 +89,7 @@ runs:
         echo "dev_image_ref=$dev_image_ref" >> $GITHUB_OUTPUT
 
     - name: Install devcontainer cli
+      if: ${{ inputs.devcontainer_enabled }}
       shell: bash
       run: |
         npm install -g @devcontainers/cli
