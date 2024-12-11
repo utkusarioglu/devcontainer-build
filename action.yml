@@ -119,8 +119,8 @@ runs:
       id: docker-build
       with:
         context: ${{ inputs.docker_context }}
-        # tags: ${{ steps.variables.outputs.repo_ref }}
-        tags: ${{ steps.variables.outputs.latest_ref }}
+        tags: ${{ steps.variables.outputs.repo_ref }}
+        # tags: ${{ steps.variables.outputs.latest_ref }}
         file: ${{ inputs.dockerfile_path }}
         push: ${{ inputs.devcontainer_enabled == 'false' }}
         pull: false
@@ -139,23 +139,23 @@ runs:
       shell: bash
       env:
         IMAGE_NAME: ${{ steps.variables.outputs.repo_name }}
-        # IMAGE_TAG: ${{ steps.variables.outputs.image_tag }}
-        IMAGE_TAG: latest
+        IMAGE_TAG: ${{ steps.variables.outputs.image_tag }}
+        # IMAGE_TAG: latest
+          # --image-name "${{ steps.variables.outputs.latest_ref }}" \
       run: |
         echo "starting devcontainer build..."
         devcontainer build \
           --workspace-folder "${{ inputs.devcontainer_subfolder }}" \
-          --image-name "docker://${{ steps.variables.outputs.latest_ref }}" \
+          --image-name "${{ steps.variables.outputs.repo_ref }}" \
           --no-cache true
-          # --image-name "${{ steps.variables.outputs.repo_ref }}" \
 
     - name: List images
       shell: bash
       run: docker image ls -a
           
-    - name: Retag image
-      shell: bash
-      run: docker tag "${{ steps.variables.outputs.latest_ref }}" "${{ steps.variables.outputs.repo_ref }}"
+    # - name: Retag image
+    #   shell: bash
+    #   run: docker tag "${{ steps.variables.outputs.latest_ref }}" "${{ steps.variables.outputs.repo_ref }}"
     
     - name: List images
       shell: bash
