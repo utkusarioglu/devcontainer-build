@@ -98,13 +98,11 @@ runs:
     - name: Install devcontainer cli
       if: ${{ inputs.devcontainer_enabled == 'true' }}
       shell: bash
-      run: |
-        npm install -g @devcontainers/cli
+      run: npm install -g @devcontainers/cli
     
     - name: Prune images
       shell: bash
-      run: |
-        docker image prune -af
+      run: docker image prune -af
 
     - name: Set up Docker Buildx
       id: buildx
@@ -130,6 +128,10 @@ runs:
         cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
         build-args: ${{ inputs.build_args }}
 
+    - name: List images
+      shell: bash
+      run: docker image ls -a
+
     - name: Build devcontainer - new
       if: ${{ inputs.devcontainer_enabled == 'true' }}
       id: devcontainer_build
@@ -144,6 +146,10 @@ runs:
           --image-name "${{ steps.variables.outputs.latest_ref }}" \
           --no-cache true
           # --image-name "${{ steps.variables.outputs.repo_ref }}" \
+
+    - name: List images
+      shell: bash
+      run: docker image ls -a
           
     - name: Retag image
       shell: bash
