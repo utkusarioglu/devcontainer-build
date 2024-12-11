@@ -90,6 +90,7 @@ runs:
         echo "image_tag=$image_tag" >> $GITHUB_OUTPUT
         echo "dev_image_tag=$dev_image_tag" >> $GITHUB_OUTPUT
         echo "repo_ref=$repo_ref" >> $GITHUB_OUTPUT
+        echo "latest_ref=$latest_ref" >> $GITHUB_OUTPUT
         echo "image_ref=$image_ref" >> $GITHUB_OUTPUT
         echo "dev_repo_ref=$dev_repo_ref" >> $GITHUB_OUTPUT
         echo "dev_image_ref=$dev_image_ref" >> $GITHUB_OUTPUT
