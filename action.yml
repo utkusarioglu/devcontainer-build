@@ -33,8 +33,12 @@ inputs:
       The path where the action will look for the `.devcontainer` folder.
     required: false
   devcontainer_enabled:
+    type: choice
     description: Switch for whether running the devcontainer build steps
-    default: true
+    default: "true"
+    options:
+      - "true"
+      - "false"
   devcontainer_run_cmd_path:
     description: |
       Path to a script file to run inside the devcontainer once the build is 
@@ -89,7 +93,7 @@ runs:
         echo "dev_image_ref=$dev_image_ref" >> $GITHUB_OUTPUT
 
     - name: Install devcontainer cli
-      if: ${{ inputs.devcontainer_enabled }}
+      if: ${{ inputs.devcontainer_enabled == "true" }}
       shell: bash
       run: |
         npm install -g @devcontainers/cli
@@ -116,7 +120,7 @@ runs:
         context: ${{ inputs.docker_context }}
         tags: ${{ steps.variables.outputs.repo_ref }}
         file: ${{ inputs.dockerfile_path }}
-        push: ${{ !inputs.devcontainer_enabled }}
+        push: ${{ inputs.devcontainer_enabled == "false" }}
         pull: false
         cache-from: type=local,src=${{ inputs.cache_src }}
         cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
@@ -137,7 +141,7 @@ runs:
           --no-cache true
 
     - name: Push devcontainer ${{ steps.variables.outputs.dev_image_ref }}
-      if: ${{ inputs.devcontainer_enabled }}
+      if: ${{ inputs.devcontainer_enabled == "true" }}
       shell: bash
       run: docker push ${{ steps.variables.outputs.repo_ref }}
 
