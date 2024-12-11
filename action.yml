@@ -122,7 +122,8 @@ runs:
         tags: ${{ steps.variables.outputs.repo_ref }}
         # tags: ${{ steps.variables.outputs.latest_ref }}
         file: ${{ inputs.dockerfile_path }}
-        push: ${{ inputs.devcontainer_enabled == 'false' }}
+        # push: ${{ inputs.devcontainer_enabled == 'false' }}
+        push: true
         pull: false
         load: true
         cache-from: type=local,src=${{ inputs.cache_src }}
