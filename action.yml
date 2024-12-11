@@ -127,7 +127,7 @@ runs:
         build-args: ${{ inputs.build_args }}
 
     - name: Build devcontainer - new
-      if: ${{ inputs.devcontainer_enabled == 'false' }}
+      if: ${{ inputs.devcontainer_enabled == 'true' }}
       id: devcontainer_build
       shell: bash
       env:
