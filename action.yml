@@ -124,7 +124,7 @@ runs:
         file: ${{ inputs.dockerfile_path }}
         push: ${{ inputs.devcontainer_enabled == 'false' }}
         pull: false
-        load: false
+        load: true
         cache-from: type=local,src=${{ inputs.cache_src }}
         cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
         build-args: ${{ inputs.build_args }}
