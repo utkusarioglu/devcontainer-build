@@ -145,7 +145,7 @@ runs:
         echo "starting devcontainer build..."
         devcontainer build \
           --workspace-folder "${{ inputs.devcontainer_subfolder }}" \
-          --image-name "${{ steps.variables.outputs.latest_ref }}" \
+          --image-name "docker://${{ steps.variables.outputs.latest_ref }}" \
           --no-cache true
           # --image-name "${{ steps.variables.outputs.repo_ref }}" \
 
