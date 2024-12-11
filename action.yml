@@ -84,6 +84,8 @@ runs:
         dev_repo_ref="$repo_name:$dev_image_tag"
         dev_image_ref="${{ inputs.image_name }}:$dev_image_tag"
 
+        latest_ref=${repo_name}:latest
+
         echo "repo_name=$repo_name" >> $GITHUB_OUTPUT
         echo "image_tag=$image_tag" >> $GITHUB_OUTPUT
         echo "dev_image_tag=$dev_image_tag" >> $GITHUB_OUTPUT
@@ -118,7 +120,8 @@ runs:
       id: docker-build
       with:
         context: ${{ inputs.docker_context }}
-        tags: ${{ steps.variables.outputs.repo_ref }}
+        # tags: ${{ steps.variables.outputs.repo_ref }}
+        tags: ${{ steps.variables.outputs.latest_ref }}
         file: ${{ inputs.dockerfile_path }}
         push: ${{ inputs.devcontainer_enabled == 'false' }}
         pull: false
@@ -137,9 +140,19 @@ runs:
         echo "starting devcontainer build..."
         devcontainer build \
           --workspace-folder "${{ inputs.devcontainer_subfolder }}" \
-          --image-name "${{ steps.variables.outputs.repo_ref }}" 
-          # \
-          # --no-cache true
+          --image-name "${{ steps.variables.outputs.latest_ref }}" \
+          --no-cache true
+          # --image-name "${{ steps.variables.outputs.repo_ref }}" \
+          
+    - name: Retag image
+      shell: bash
+      run: docker image tag \
+          ${{ steps.variables.outputs.latest_ref }} \
+          ${{ steps.variables.outputs.repo_ref }} 
+    
+    - name: List images
+      shell: bash
+      run: docker image ls -a
 
     - name: Push devcontainer ${{ steps.variables.outputs.dev_image_ref }}
       if: ${{ inputs.devcontainer_enabled == 'true' }}
