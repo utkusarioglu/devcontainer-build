@@ -32,6 +32,9 @@ inputs:
     description: |
       The path where the action will look for the `.devcontainer` folder.
     required: false
+  devcontainer_enabled:
+    description: Switch for whether running the devcontainer build steps
+    default: true
   devcontainer_run_cmd_path:
     description: |
       Path to a script file to run inside the devcontainer once the build is 
@@ -112,13 +115,14 @@ runs:
         context: ${{ inputs.docker_context }}
         tags: ${{ steps.variables.outputs.repo_ref }}
         file: ${{ inputs.dockerfile_path }}
-        push: false
+        push: ${{ !inputs.devcontainer_enabled }}
         pull: false
         cache-from: type=local,src=${{ inputs.cache_src }}
         cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
         build-args: ${{ inputs.build_args }}
 
     - name: Build devcontainer - new
+      if: ${{ inputs.devcontainer_enabled }}
       id: devcontainer_build
       shell: bash
       env:
@@ -132,6 +136,7 @@ runs:
           --no-cache true
 
     - name: Push devcontainer ${{ steps.variables.outputs.dev_image_ref }}
+      if: ${{ inputs.devcontainer_enabled }}
       shell: bash
       run: docker push ${{ steps.variables.outputs.repo_ref }}
 
