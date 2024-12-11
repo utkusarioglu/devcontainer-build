@@ -118,8 +118,8 @@ runs:
         tags: ${{ steps.variables.outputs.repo_ref }}
         # tags: localhost:5000/${{ steps.variables.outputs.image_ref }}
         file: ${{ inputs.dockerfile_path }}
-        push: true
-        pull: true
+        push: false
+        pull: false
         cache-from: type=local,src=${{ inputs.cache_src }}
         cache-to: type=local,mode=max,dest=${{ inputs.cache_dest }}
         # outputs: type=docker,dest=/tmp/temp-image.tar
